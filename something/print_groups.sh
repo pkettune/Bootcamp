@@ -1,0 +1,1 @@
+cat print_groups.sh | sort | id -p | cut -d , -f 1,2
