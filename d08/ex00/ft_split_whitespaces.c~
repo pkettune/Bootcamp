@@ -1,0 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split_whitespaces.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pkettune <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/18 18:52:16 by pkettune          #+#    #+#             */
+/*   Updated: 2022/08/18 23:13:17 by pkettune         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <stdlib.h>
+#include <stdio.h>
+
+int		count_chars(char *str, int i)
+{
+	int chars;
+
+	chars = 0;
+	while (str[i])
+	{
+		if (str[i+1] != ' ' && str[i+1] != '\t' && str[i+1] != '\n')
+			i++;
+		else
+			break;
+		i++;
+	}
+	return (chars);
+}
+
+
+int		count_empty(char *str)
+{
+	int	count;
+	int i;
+
+	count = 0;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+		{
+			if(str[i+1] != ' ' && str[i+1] != '\t' && str[i+1] != '\n')
+				count++;
+		}
+		i++;
+	}
+	return (count);
+}
+
+int		empty_or_not(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\0')
+	{
+		return ('1');
+	}
+	else
+	{
+		return ('0');
+	}
+}
+
+char	**ft_split_whitespaces(char *str)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	**aofa;
+	char	*ofa;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	aofa = (char**)malloc(sizeof(char *) * (count_empty(str) + 2));
+	while (str[i] != '\0')
+	{
+		if (empty_or_not(str[i]) == 1)
+			i++;
+		else
+		{
+			ofa = malloc(sizeof(char) * (count_chars(str, i) + 1));
+			k = 0;
+			while (empty_or_not(str[i] == 0))
+			{
+				ofa[k] = str[i];
+				i++;
+				k++;
+			}
+			ofa[k] = '\0';
+			aofa[j] = ofa;
+			j++;
+		}
+	}
+	return (aofa);
+}
+
+int	main(void)
+{
+	char	*str;
+
+	str = "asdf okay	sure \n okay";
+	ft_split_whitespaces(str);
+	printf("%s\n",str);
+	return (0);
+}
